@@ -1,0 +1,38 @@
+<div class="row text-center" *ngIf="itemDetails">
+    <div class="col-md-6">
+        <div class="item-details">
+            <img [src]="itemDetails.image ? restService.imageUrl+itemDetails.image: ''" alt="{{itemDetails?.title}}" width="80%" >
+        </div>
+       
+    </div>
+    <div class="col-md-6">
+         <div class="item-details detail">
+         <h1>{{itemDetails?.title}}</h1>
+         <div class="price">${{itemDetails?.price}}</div>
+         <div class="pickers">
+            <label>Size</label>
+            <select class="custom-select-dropdown" (change)="sizeValueChange($event)" [(ngModel)] ="itemSizeselected">
+                <option *ngFor="let obj of itemSize" 
+                [ngValue]="obj.name" [selected]="obj.name == itemSizeselected"> {{obj.name}} </option>
+            </select>
+         </div>
+         <div class="pickers">
+            <label>Qty:</label>
+            <select class="custom-select-dropdown" (change)="quantityValueChange($event)" >
+                <option *ngFor="let obj of itemQuantity" 
+                [ngValue]="obj.num" > {{obj.num}} </option>
+            </select>
+         </div>
+         <div class="description">
+            <h2>Description</h2>
+            <p id="desc" [innerHtml]="itemDetails?.description"></p>
+          </div>
+          <div class="p-col">
+            <p-button (click)="confirmPosition('top-right')" icon="pi pi-arrow-down" label="Add to cart" styleClass="btn btn-default"></p-button>
+          </div>
+        
+    </div>
+
+</div>
+<p-confirmDialog [style]="{width: '25vw'}" key="positionDialog" [position]="position" [baseZIndex]="10000" acceptLabel={{acceptLabel}} rejectLabel={{rejectLabel}}></p-confirmDialog>
+

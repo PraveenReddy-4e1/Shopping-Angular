@@ -1,0 +1,7 @@
+<div class="row p-20">
+    <div class="col-md-12 text-center">
+          <span class="head-name">SHOP</span>
+          <span class="head-icon" [routerLink]="['/cart']"><i class="pi pi-shopping-cart" style="font-size: 1.5rem" ></i></span>
+          <div class="cart-badge" [routerLink]="['/cart']" aria-hidden="true" *ngIf="itemsQuanCount && itemsQuanCount != 0">{{itemsQuanCount}}</div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<div class="cart-details" *ngIf="localCartItems?.length">
+    <div class="cart-header text-center">
+        <h1>Your Cart</h1>
+        <span>( {{localCartItems?.length}}Items )</span>
+    </div>
+    <div class="cart-body">
+        <div class="row" *ngFor="let data of localCartItems;let index = index" style="margin-bottom: 24px;">
+            <div class="col-md-4">
+                <img [src]="data.item.image ? restService.imageUrl+data.item.image: ''" alt="{{data.item.title}}" alt="Mens Wear" 
+                width="72" height="72" (click)="goToBack(data)" style="cursor: pointer;">
+                <span style="margin-left: 24px;cursor: pointer;" (click)="goToBack(data)">{{data.item.title}}</span>
+            </div>
+            <div class="col-md-2 mt-20 text-center">
+                <label>Qty:</label>
+                <select class="custom-select" (change)="quantityValueChange($event,data)" [(ngModel)] ="data.quantity">
+                    <option *ngFor="let obj of itemQuantity" 
+                    [ngValue]="obj.num" [selected]="obj.num == data.quantity" > {{obj.num}} </option>
+                </select>
+         </div>
+            <div class="col-md-2 mt-20 text-center">
+                Size : {{data.size}}
+            </div>
+            <div class="col-md-2 mt-20 text-center">
+                $ {{data.item.price}}
+             </div>
+            <div class="col-md-2 mt-20 text-center">
+                <i class="pi pi-times" style="cursor: pointer;" (click)="removeItem(index)"></i>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="checkout-box">
+        Total: <span class="subtotal">$ {{totalAmount | number : '1.2-2'}}</span>
+        <button type="button" class="btn btn-default">Check Out</button>
+    </div>
+
+</div>
+<div class="cart-details text-center" *ngIf="localCartItems.length == 0">
+    <p class="empty-cart">Your <i class="pi pi-shopping-cart" style="cursor: pointer;"></i> is empty.</p>
+    <a href="javaScript:;" [routerLink]="['/home']">Click Here To go <i class="pi pi-home" style="cursor: pointer;"></i> Home Page</a>
+</div>

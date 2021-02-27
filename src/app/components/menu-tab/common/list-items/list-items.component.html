@@ -1,0 +1,14 @@
+<div class="home-item mt-10 list">
+    <img [src]="largeImage" alt="Mens Wear" class="img-bottom" width="100%" >
+    <h1>{{listHeading}}</h1>
+    <span>({{listItemsArray?.length}} Items)</span>
+</div>
+<ul class="grid-item" *ngIf="listItemsArray">
+    <ng-container *ngFor="let item of listItemsArray" >
+    <li class="text-center" (click)="getDetails(item)">
+        <img [src]="item.image ? restService.imageUrl+item.image: ''" alt="{{item.title}}">
+        <div class="title">{{item.title}}</div>
+        <span class="price">${{item.price}}</span>
+    </li>
+</ng-container>
+</ul>
