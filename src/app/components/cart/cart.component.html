@@ -12,7 +12,7 @@
             </div>
             <div class="col-md-2 mt-20 text-center">
                 <label>Qty:</label>
-                <select class="custom-select" (change)="quantityValueChange($event,data)" [(ngModel)] ="data.quantity">
+                <select class="custom-select" (change)="quantityValueChange($event,data,index)" [(ngModel)] ="data.quantity">
                     <option *ngFor="let obj of itemQuantity" 
                     [ngValue]="obj.num" [selected]="obj.num == data.quantity" > {{obj.num}} </option>
                 </select>
@@ -33,7 +33,7 @@
 
     <div class="checkout-box">
         Total: <span class="subtotal">$ {{totalAmount | number : '1.2-2'}}</span>
-        <button type="button" class="btn btn-default">Check Out</button>
+        <!-- <button type="button" class="btn btn-default">Check Out</button> -->
     </div>
 
 </div>
@@ -41,3 +41,4 @@
     <p class="empty-cart">Your <i class="pi pi-shopping-cart" style="cursor: pointer;"></i> is empty.</p>
     <a href="javaScript:;" [routerLink]="['/home']">Click Here To go <i class="pi pi-home" style="cursor: pointer;"></i> Home Page</a>
 </div>
+

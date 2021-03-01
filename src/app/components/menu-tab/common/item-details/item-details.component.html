@@ -28,11 +28,10 @@
             <p id="desc" [innerHtml]="itemDetails?.description"></p>
           </div>
           <div class="p-col">
-            <p-button (click)="confirmPosition('top-right')" icon="pi pi-arrow-down" label="Add to cart" styleClass="btn btn-default"></p-button>
+            <app-confirm-dialog [position]="position" [acceptLabel]="acceptLabel" (confirmCall)="fromReusable($event)"></app-confirm-dialog>
           </div>
         
     </div>
 
 </div>
-<p-confirmDialog [style]="{width: '25vw'}" key="positionDialog" [position]="position" [baseZIndex]="10000" acceptLabel={{acceptLabel}} rejectLabel={{rejectLabel}}></p-confirmDialog>
 

@@ -17,11 +17,11 @@ import { ListItemsComponent } from './components/menu-tab/common/list-items/list
 import { HttpClientModule } from '@angular/common/http';
 import { RestServiceService } from './services/rest-service.service';
 import { ItemDetailsComponent } from './components/menu-tab/common/item-details/item-details.component';
-import { CartComponent } from './components/cart/cart.component'
+import { CartComponent } from './components/cart/cart.component';
 
-import { ButtonModule } from 'primeng/button';
-import { MessagesModule } from 'primeng/messages';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
+
+import { ReUseableModule } from './re-useable/re-useable.module';
+
 
 
 @NgModule({
@@ -46,11 +46,9 @@ import { ConfirmDialogModule } from 'primeng/confirmdialog';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    ButtonModule,
-    MessagesModule,
-    ConfirmDialogModule
+    ReUseableModule
   ],
   providers: [RestServiceService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

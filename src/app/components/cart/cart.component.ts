@@ -18,11 +18,14 @@ export class CartComponent implements OnInit {
 
   ngOnInit(): void {
     this.localCartItems = JSON.parse(localStorage.getItem('cartData'));
-    this.setTotalAmout();
-
+    if(this.localCartItems){
+      this.setTotalAmout();
+    }
   }
-  quantityValueChange(ev,data){
-    data.quantity = ev.target.value;
+  quantityValueChange(ev,data,i){
+    data.quantity = parseInt(ev.target.value);
+    this.localCartItems[i].quantity = parseInt(ev.target.value);
+    localStorage.setItem('cartData',JSON.stringify(this.localCartItems));
     this.setTotalAmout();
   }
 
@@ -39,9 +42,9 @@ export class CartComponent implements OnInit {
     }, 0);
 
     let count = this.localCartItems.reduce((prev, cur) => {
-      return parseInt(prev) + parseInt(cur.quantity);
+      return prev + cur.quantity;
     }, 0);
-    localStorage.setItem('selectedItemsCount',JSON.stringify(parseInt(count)));
+    localStorage.setItem('selectedItemsCount',count);
     this.dataTransferService.selectedItem(count);
     
   }

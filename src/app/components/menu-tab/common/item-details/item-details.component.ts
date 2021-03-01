@@ -3,16 +3,13 @@ import { DataServiceService } from '../../../../services/data-service.service';
 import { RestServiceService } from '../../../../services/rest-service.service';
 import { ActivatedRoute,Router} from '@angular/router';
 
-import {ConfirmationService} from 'primeng/api';
-import {Message} from 'primeng/api';
-import { PrimeNGConfig } from 'primeng/api';
+
 
 
 @Component({
   selector: 'app-item-details',
   templateUrl: './item-details.component.html',
   styleUrls: ['./item-details.component.scss'],
-  providers: [ConfirmationService]
 })
 export class ItemDetailsComponent implements OnInit {
   selectedItemData1:any;
@@ -24,17 +21,15 @@ export class ItemDetailsComponent implements OnInit {
   itemSizeselected='M' ;
   itemQuantity= [{num:1},{num:2},{num:3},{num:4},{num:5}];
   itemQuanSelected:any = 1 ;
-  position: string;
+  position='top-right';
   acceptLabel="VIEW CART";
-  rejectLabel="CHECKOUT"
+  
 
   constructor(private dataTransferService:DataServiceService,
     private restService:RestServiceService,
-    private route: ActivatedRoute,private router: Router,
-    private confirmationService: ConfirmationService, private primengConfig: PrimeNGConfig) { }
+    private route: ActivatedRoute,private router: Router) { }
 
   ngOnInit(): void {
-    this.primengConfig.ripple = true;
     this.route.params.subscribe(params => {
       this.id = params.id;
       this.pathFrom = this.router.url.split('/')[1];
@@ -55,25 +50,9 @@ export class ItemDetailsComponent implements OnInit {
 
   }
   quantityValueChange(ev){
-    this.itemQuanSelected = ev.target.value;
+    this.itemQuanSelected = parseInt(ev.target.value);
 
   }
-
-confirmPosition(position: string) {
-    this.position = position;
-    this.confirmationService.confirm({
-        message: 'Added to cart',
-        // header: 'Delete Confirmation',
-        // icon: 'pi pi-info-circle',
-        accept: () => {
-            this.addItemToCart();
-        },
-        reject: () => {
-            
-        },
-        key: "positionDialog"
-    });
-}
 
 addItemToCart(){
   let getLocalData = JSON.parse(localStorage.getItem('cartData'));
@@ -83,11 +62,11 @@ addItemToCart(){
     let cartData = [{
       item: this.itemDetails,
       size : this.itemSizeselected,
-      quantity : parseInt(this.itemQuanSelected),
+      quantity : this.itemQuanSelected,
       path : this.pathFrom
    }]
    localStorage.setItem('cartData',JSON.stringify(cartData));
-   localStorage.setItem('selectedItemsCount',JSON.stringify(parseInt(this.itemQuanSelected)));
+   localStorage.setItem('selectedItemsCount',this.itemQuanSelected);
    this.dataTransferService.selectedItem(this.itemQuanSelected);
   }
   this.router.navigate(['/cart']);
@@ -100,7 +79,7 @@ pushToArray(arr, obj) {
     let cartData = {
       item: obj,
       size : this.itemSizeselected,
-      quantity : parseInt(this.itemQuanSelected),
+      quantity : this.itemQuanSelected,
       path : this.pathFrom
    }
       arr.push(cartData);
@@ -112,8 +91,11 @@ pushToArray(arr, obj) {
   let count = arr.reduce((prev, cur) => {
     return prev + cur.quantity;
   }, 0);
-  localStorage.setItem('selectedItemsCount',JSON.stringify(parseInt(count)));
+  localStorage.setItem('selectedItemsCount',count);
   this.dataTransferService.selectedItem(count);
 }
 
+fromReusable(ev){
+  this.addItemToCart();
+}
 }
